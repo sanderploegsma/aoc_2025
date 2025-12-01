@@ -1,6 +1,14 @@
 import gleam/int
+import gleam/io
 import gleam/list
 import gleam/string
+import simplifile
+
+pub fn run() -> Nil {
+  let assert Ok(input) = simplifile.read("input/01.txt")
+  io.println("Part one: " <> int.to_string(part_one(input)))
+  io.println("Part two: " <> int.to_string(part_two(input)))
+}
 
 pub fn part_one(input: String) -> Int {
   let parse_line = fn(line: String) -> Int {

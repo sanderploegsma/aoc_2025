@@ -1,22 +1,32 @@
 import argv
 import day_01
+import gleam/dict
 import gleam/int
 import gleam/io
+import gleam/list
 import gleam/result
-import simplifile
+import gleam/string
 
 pub fn main() -> Nil {
-  case argv.load().arguments {
-    ["1", "1", input_file] -> run_with_file(input_file, day_01.part_one)
-    ["1", "2", input_file] -> run_with_file(input_file, day_01.part_two)
-    _ -> io.println("Usage: aoc_2025 <day> <part> [input_file]")
-  }
-}
+  let solutions =
+    dict.from_list([
+      #(1, day_01.run),
+    ])
 
-fn run_with_file(input_file: String, target: fn(String) -> Int) {
-  simplifile.read(input_file)
-  |> result.map(target)
-  |> result.map(int.to_string)
-  |> result.unwrap("Error reading file " <> input_file)
-  |> io.println
+  case
+    argv.load().arguments
+    |> list.first
+    |> result.try(int.parse)
+    |> result.try(fn(idx) { dict.get(solutions, idx) })
+  {
+    Ok(solution) -> solution()
+    Error(_) ->
+      io.println_error(
+        "Valid arguments: "
+        <> dict.keys(solutions)
+        |> list.sort(by: int.compare)
+        |> list.map(int.to_string)
+        |> string.join("|"),
+      )
+  }
 }
