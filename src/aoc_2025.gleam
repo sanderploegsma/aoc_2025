@@ -8,6 +8,7 @@ import simplifile
 pub fn main() -> Nil {
   case argv.load().arguments {
     ["1", "1", input_file] -> run_with_file(input_file, day_01.part_one)
+    ["1", "2", input_file] -> run_with_file(input_file, day_01.part_two)
     _ -> io.println("Usage: aoc_2025 <day> <part> [input_file]")
   }
 }
