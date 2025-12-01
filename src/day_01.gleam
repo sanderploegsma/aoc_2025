@@ -2,46 +2,36 @@ import gleam/int
 import gleam/list
 import gleam/string
 
-type Rotation {
-  Left(Int)
-  Right(Int)
-}
-
 pub fn part_one(input: String) -> Int {
+  let parse_line = fn(line: String) -> Int {
+    case string.first(line), int.parse(string.drop_start(line, 1)) {
+      Ok("L"), Ok(d) -> -1 * d
+      Ok("R"), Ok(d) -> d
+      _, _ -> 0
+    }
+  }
+
   string.split(input, on: "\n")
-  |> list.map(parse)
-  |> list.scan(from: 50, with: rotate)
-  |> list.count(where: fn(a) { a == 0 })
+  |> list.map(parse_line)
+  |> rotate_and_count_zeroes
 }
 
 pub fn part_two(input: String) -> Int {
-  string.split(input, on: "\n")
-  |> list.map(parse)
-  |> list.flat_map(fn(r) {
-    case r {
-      Left(d) -> list.repeat(Left(1), times: d)
-      Right(d) -> list.repeat(Right(1), times: d)
+  let parse_line = fn(line: String) -> List(Int) {
+    case string.first(line), int.parse(string.drop_start(line, 1)) {
+      Ok("L"), Ok(d) -> list.repeat(-1, times: d)
+      Ok("R"), Ok(d) -> list.repeat(1, times: d)
+      _, _ -> []
     }
-  })
-  |> list.scan(from: 50, with: rotate)
+  }
+
+  string.split(input, on: "\n")
+  |> list.flat_map(parse_line)
+  |> rotate_and_count_zeroes
+}
+
+fn rotate_and_count_zeroes(rotations: List(Int)) {
+  rotations
+  |> list.scan(from: 50, with: fn(acc, cur) { { acc + cur } % 100 })
   |> list.count(where: fn(a) { a == 0 })
-}
-
-fn parse(line: String) -> Rotation {
-  case int.parse(string.drop_start(line, 1)) {
-    Ok(dist) ->
-      case string.first(line) {
-        Ok("L") -> Left(dist)
-        Ok("R") -> Right(dist)
-        _ -> Left(0)
-      }
-    _ -> Left(0)
-  }
-}
-
-fn rotate(acc: Int, r: Rotation) -> Int {
-  case r {
-    Left(d) -> { acc - d } % 100
-    Right(d) -> { acc + d } % 100
-  }
 }
