@@ -1,6 +1,7 @@
 import argv
 import day_01
 import day_02
+import day_03
 import gleam/dict
 import gleam/int
 import gleam/io
@@ -13,6 +14,7 @@ pub fn main() -> Nil {
     dict.from_list([
       #(1, day_01.run),
       #(2, day_02.run),
+      #(3, day_03.run),
     ])
 
   case

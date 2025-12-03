@@ -6,7 +6,7 @@
 | --- | ------------------------------------------------------ | ----- | -------------------------------- |
 | 1   | [Secret Entrance](https://adventofcode.com/2025/day/1) | ⭐️⭐️    | [day_01.gleam](src/day_01.gleam) |
 | 2   | [Gift Shop](https://adventofcode.com/2025/day/2)       | ⭐️⭐️    | [day_02.gleam](src/day_02.gleam) |
-| 3   | [TBD](https://adventofcode.com/2025/day/3)             |       |                                  |
+| 3   | [Lobby](https://adventofcode.com/2025/day/3)           | ⭐️     | [day_03.gleam](src/day_03.gleam) |
 | 4   | [TBD](https://adventofcode.com/2025/day/4)             |       |                                  |
 | 5   | [TBD](https://adventofcode.com/2025/day/5)             |       |                                  |
 | 6   | [TBD](https://adventofcode.com/2025/day/6)             |       |                                  |
